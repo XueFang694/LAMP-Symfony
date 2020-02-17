@@ -1,0 +1,12 @@
+# Version de docker-composer souhaitée
+version : "3.7"
+
+services :
+    
+    php_apache :
+        build : ./
+        ports :
+            - 80:80
+        volumes :
+            - ./:/var/www/html
+        tty: true
