@@ -1,0 +1,6 @@
+{
+    "require":
+    {
+        "symfony/symfony" : "5.0.4"
+    }
+}

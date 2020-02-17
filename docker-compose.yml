@@ -17,17 +17,19 @@ services :
             MYSQL_USER : root
             MYSQL_PASSWORD : root
     
-    composer :
-        image : composer:1.9.3
-        links :
-            - php_apache:php_apache
-        volumes :
-            - hotfolder_composer:/usr/bin/
+    #composer :
+    #    image : composer:1.9.3
+    #    ports :
+    #        - 8080:80
+    #    links :
+    #        - php_apache:php_apache
+    #    volumes :
+    #        - hotfolder_composer:/usr/bin/
 
     bdd :
         image : mariadb:10.5.1
         ports :
-            - 3306:3306
+            - 3307:3306
         restart : always
         volumes :
             - hotfolder_bdd:/var/lib/mariadb
@@ -36,6 +38,7 @@ services :
             MYSQL_ROOT_PASSWORD : root
             MYSQL_USER : symfony
             MYSQL_PASSWORD : symfony
+        tty: true
 volumes: 
     hotfolder_bdd:
     hotfolder_composer:
