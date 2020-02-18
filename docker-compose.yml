@@ -29,6 +29,10 @@ services :
     bdd :
         image : mariadb/server:10.4
         restart : always
+        ports :
+            - 3307:3306
+        labels:
+            com.symfony.server.service-prefix: 'DATABASE'
         volumes :
             - hotfolder_bdd:/var/lib/mysql
         environment :
