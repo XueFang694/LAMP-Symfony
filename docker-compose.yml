@@ -2,7 +2,7 @@
 version : "3.7"
 
 services :
-    
+
     php_apache :
         build : ./
         ports :
@@ -16,7 +16,7 @@ services :
             MYSQL_HOST : bdd
             MYSQL_USER : root
             MYSQL_PASSWORD : root
-    
+
     composer :
         image : composer:1.9.3
         ports :
@@ -27,18 +27,28 @@ services :
             - hotfolder_composer:/usr/bin/
 
     bdd :
-        image : mariadb:10.5.1
-        ports :
-            - 3307:3306
+        image : mariadb/server:10.4
         restart : always
         volumes :
-            - hotfolder_bdd:/var/lib/mariadb
-        environment : 
+            - hotfolder_bdd:/var/lib/mysql
+        environment :
             MYSQL_ROOT_USER : root
             MYSQL_ROOT_PASSWORD : root
             MYSQL_USER : symfony
             MYSQL_PASSWORD : symfony
         tty: true
-volumes: 
+
+    phpMyAdmin :
+        image : phpmyadmin/phpmyadmin:5.0
+        ports :
+            - 8081:80
+        links :
+            - bdd:bdd
+        depends_on :
+            - bdd
+        environment :
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mariadb
+volumes:
     hotfolder_bdd:
     hotfolder_composer:
