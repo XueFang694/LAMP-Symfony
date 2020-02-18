@@ -17,14 +17,14 @@ services :
             MYSQL_USER : root
             MYSQL_PASSWORD : root
     
-    #composer :
-    #    image : composer:1.9.3
-    #    ports :
-    #        - 8080:80
-    #    links :
-    #        - php_apache:php_apache
-    #    volumes :
-    #        - hotfolder_composer:/usr/bin/
+    composer :
+        image : composer:1.9.3
+        ports :
+            - 8080:80
+        links :
+            - php_apache:php_apache
+        volumes :
+            - hotfolder_composer:/usr/bin/
 
     bdd :
         image : mariadb:10.5.1
