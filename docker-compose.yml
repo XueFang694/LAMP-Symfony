@@ -48,11 +48,8 @@ services :
             - 8081:80
         links :
             - bdd:bdd
-        depends_on :
-            - bdd
         environment :
-            - PMA_ARBITRARY=1
-            - PMA_HOST=mariadb
+            - PMA_HOST=bdd
 volumes:
     hotfolder_bdd:
     hotfolder_composer:
