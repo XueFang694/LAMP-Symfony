@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +23,7 @@ class LuckyController extends AbstractController
         $number = random_int( 0, 100 );
 
         return $this->render(
-                        'montemplate.html.twig', [ "numero" => $number ]
+                        'body.html.twig', [ "numero" => $number ]
         );
     }
 

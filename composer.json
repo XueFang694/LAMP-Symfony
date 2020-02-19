@@ -1,5 +1,5 @@
 {
-    "require": {
-        "symfony/symfony": "5.1"
-    }
+	"require" : {
+		"symfony/symfony" : "^5.0"
+	}
 }

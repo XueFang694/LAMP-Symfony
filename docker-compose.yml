@@ -6,7 +6,7 @@ services :
     php_apache :
         build : ./
         ports :
-            - 80:80
+            - 8080:80
         volumes :
             - ./:/var/www/html
         tty: true
@@ -18,9 +18,9 @@ services :
             MYSQL_PASSWORD : root
 
     composer :
-        image : composer:1.9.3
+        image : composer:latest
         ports :
-            - 8080:80
+            - 8081:80
         links :
             - php_apache:php_apache
         volumes :
@@ -45,7 +45,7 @@ services :
     phpMyAdmin :
         image : phpmyadmin/phpmyadmin:5.0
         ports :
-            - 8081:80
+            - 8082:80
         links :
             - bdd:bdd
         environment :
