@@ -1,0 +1,9 @@
+{% extends 'blog/index.html.twig' %}
+
+{% dump articles %}
+
+{% block body %}
+    {% for art in articles %}
+        {{ art.content | raw }}
+    {% endfor %}
+{% endblock body %}

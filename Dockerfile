@@ -11,6 +11,8 @@ RUN apt-get install -y\
     git \
     zip \
     unzip \
+    nano \
+    vim \
     wget \
     && \
     rm -r /var/lib/apt/lists/* &&\
