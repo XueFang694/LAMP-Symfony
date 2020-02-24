@@ -15,39 +15,56 @@ use App\Repository\MaPremiereTableRepository;
 
 class BlogController extends AbstractController
 {
-
     /*
      * @Route("/blog", name="blog")
      */
-    /*public function list()
-    {
-        $repo = $this->getDoctrine()->getRepository( MaPremiereTable::class );
-        $articles = $repo->findAll();
-        return $this->render( "blog/default.html.twig", [
-                    "articles" => $articles
-                ] );
-    }*/
-    
+    /* public function list()
+      {
+      $repo = $this->getDoctrine()->getRepository( MaPremiereTable::class );
+      $articles = $repo->findAll();
+      return $this->render( "blog/default.html.twig", [
+      "articles" => $articles
+      ] );
+      } */
+
     /**
-     * Cette méthode est égale à la méthode précédente mais simplifie la syntaxe de l'injection de dépendance du repository
+     *
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->render( "blog/index.html.twig" );
+    }
+
+    /**
+     * Cette mï¿½thode est ï¿½gale ï¿½ la mï¿½thode prï¿½cï¿½dente mais simplifie la syntaxe de l'injection de dï¿½pendance du repository
      * @Route("/blog", name="blog")
      */
     public function list( MaPremiereTableRepository $repo )
     {
         $articles = $repo->findAll();
-        return $this->render( "blog/default.html.twig", [
-            "articles" => $articles
-        ] );
+        return $this->render( "blog/articleList.html.twig", [
+                    "articles" => $articles
+                ] );
     }
-    
+
+    /**
+     *
+     * @Route("/blog/CREATE", name="blog_create")
+     */
+    public function create()
+    {
+        return $this->render( "blog/create.html.twig" );
+    }
+
     /**
      * @Route("/blog/GET/{id}", name="blog_display_article")
      */
     public function show( MaPremiereTable $article )
     {
-        return $this->render("blog/article.twig.html", [
-            "article" => $article
-        ]);
+        return $this->render( "blog/article.html.twig", [
+                    "article" => $article
+                ] );
     }
 
 }

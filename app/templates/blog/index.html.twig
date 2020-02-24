@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link href="{{ asset("css/minireset.min.css") }}" rel="stylesheet"/>
+        <link href="{{ asset("css/menu.css") }}" rel="stylesheet"/>
     </head>
     <body>
-        {% block body %}{% endblock  %}
+        {% include 'blog/menu.html.twig' %}
+        {% block body %}Bienvenue sur le blog{% endblock %}
     </body>
 </html>
