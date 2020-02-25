@@ -1,5 +1,15 @@
 {% extends "blog/index.html.twig" %}
 
 {% block body %}
-    <h1>Création d'un article !</h1>
+    {{ form_start(formArticle) }}
+    {{ form_row(formArticle.name, {"label":"Nom de l'article à éditer/créer"}) }}
+    {{ form_widget(formArticle) }}
+    <button>
+        {% if articleExist %}
+            Sauvegarder les modifications
+        {% else %}
+            Créer l'article
+        {% endif %}
+    </button>
+    {{ form_end(formArticle) }}
 {% endblock %}

@@ -21,7 +21,8 @@ use App\Form\ArticleType;
 
 class BlogController extends AbstractController
 {
-   /**
+
+    /**
      *
      * @Route("/", name="home")
      */
@@ -31,7 +32,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * 
+     *
      * @Route("/blog", name="blog")
      */
     public function list( ArticleRepository $repo )
@@ -47,35 +48,35 @@ class BlogController extends AbstractController
      * @Route("/blog/CREATE", name="blog_create")
      * @Route("/blog/{id}/UPDATE", name="blog_update")
      */
-    public function form( Article $article = null,  Request $request, EntityManagerInterface $manager )
+    public function form( Article $article = null, Request $request, EntityManagerInterface $manager )
     {
-        if(!$article)
+        if ( !$article )
         {
             $article = new Article();
         }
-        $form = $this->createForm(ArticleType::class, $article);
-        
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid() )
+        $form = $this->createForm( ArticleType::class, $article );
+
+        $form->handleRequest( $request );
+
+        if ( $form->isSubmitted() && $form->isValid() )
         {
-            if(!$article->getId())
+            if ( !$article->getId() )
             {
-                $article->setCreatedAt(new \DateTime());
+                $article->setCreatedAt( new \DateTime() );
             }
-            $manager->persist($article);
+            $manager->persist( $article );
             $manager->flush();
-            
-            return $this->redirectToRoute("blog_display_article", [
-                'id'=> $article->getId()       
-            ]);
+
+            return $this->redirectToRoute( "blog_display_article", [
+                        'id' => $article->getId()
+                    ] );
         }
-        
-        
+
+
         return $this->render( "blog/create.html.twig", [
-            "formArticle" => $form->createView(),
-            "articleExist" => $article->getId() !== null
-        ] );
+                    "formArticle" => $form->createView(),
+                    "articleExist" => $article->getId() !== null
+                ] );
     }
 
     /**

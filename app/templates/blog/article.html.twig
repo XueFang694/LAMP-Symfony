@@ -1,4 +1,15 @@
 {% extends 'blog/index.html.twig' %}
 {% block body %}
     Bonjour, je suis l'article {{article.id}}
+    <br>
+    Mon contenu est le suivant :
+    <br>
+    <br>
+    Nom : {{ article.name }}
+    <br>
+    Contenu : {{ article.content|raw }}
+    <br>
+    Image : {{ article.image }}
+    <br>
+    Date de création : {{ article.createdAt|date("m/d/Y") }}
 {%  endblock %}

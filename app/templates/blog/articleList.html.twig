@@ -2,7 +2,8 @@
 
 {% block body %}
     {% for art in articles %}
-        <a href="{{ path( "blog_display_article", {id: art.id}) }}">Lire l'article</a>
+        <a href="{{ path( "blog_display_article", {id: art.id}) }}">Lire l'article {{ art.id - 1 }}</a>
         {{ art.content | raw }}
+        <br>
     {% endfor %}
 {% endblock body %}
