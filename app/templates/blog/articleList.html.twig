@@ -2,6 +2,7 @@
 
 {% block body %}
     {% for art in articles %}
+    	<img src="{{ art.image }}"/>
         <a href="{{ path( "blog_display_article", {id: art.id}) }}">Lire l'article</a>
         {{ art.content | raw }}
     {% endfor %}
