@@ -2,7 +2,9 @@ FROM php:7.4.2-apache AS build
 
 
 LABEL author="Geoffrey LEVENEZ"
-
+# Paramétrage de la zone géographique
+RUN echo "Europe/Paris" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 # Mise à  jour de l'OS
 RUN apt-get update; echo "Erreur lors de la mise à  jour de l'OS" exit 0
 # Lors de l'ouverture du conteneur les commandes suivantes seront exécutées
