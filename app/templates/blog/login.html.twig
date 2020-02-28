@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ asset("css/minireset.min.css") }}" rel="stylesheet"/>
+        <title>Industrialiseur | Page de connexion</title>
+        <style>
+
+            html,body
+            {
+                display: flex;
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+            }
+
+            body::before
+            {
+                content: "";transform: scale(1.1);
+                position: absolute;
+                filter: blur(4px);
+                background-size: cover;
+                background-position-x: 50%;
+                background-position-y: 50%;
+                z-index: -1;
+                height: 100%; width: 100%;
+                background: url({{ background }});
+            }
+
+            #container_loging
+            {
+                width: 500px;
+                height: 176px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -250px;
+                margin-top: -88px;
+            }
+
+            #container
+            {
+                width: 100%;
+                height: 100%;
+            }
+
+            #container
+            {
+                padding-left: 2%;
+                padding-right: 2%;
+            }
+
+            #container_left h1
+            {
+                display: inline-block;
+                transform: rotate(-90deg);
+                vertical-align: middle;
+                position: relative;
+                vertical-align:middle;
+                text-align:center;
+            }
+
+            form input
+            {
+                padding-left: 2%;
+                padding-right: 2%;
+                opacity: 0.9;
+                margin-bottom: 35px;
+            }
+
+            form input, #container button
+            {
+                width: 100%;
+                height: 35px;
+            }
+
+            #container button
+            {
+                border-color: #00a1ff;
+                background-color: #00a1ff;
+                color: white;
+            }
+
+            form input, #container button
+            {
+                font-size: 1em;
+            }
+
+            #container button
+            {
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="container_loging">
+            <div id="container" class="container_loging">
+                {{form_start(formLogin)}}
+                {{form_row(formLogin.login, {'label':false,'attr':{'placeholder': 'Votre identifiant'}})}}
+                {{form_row(formLogin.password, {'label':false,'attr':{'placeholder': 'Votre mot de passe'}})}}
+                {{form_widget(formLogin)}}
+                {{form_end(formLogin)}}
+                <button type="submit">Se connecter</button>
+            </div>
+        </div>
+    </body>
+</html>
