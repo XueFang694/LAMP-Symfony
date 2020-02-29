@@ -9,6 +9,9 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get update; echo "Erreur lors de la mise à  jour de l'OS" exit 0
 # Lors de l'ouverture du conteneur les commandes suivantes seront exécutées
 
+# Copie le fichier de configuration de PHP
+COPY ./docker/php_apache/php.ini /usr/local/etc/php/
+
 RUN apt-get install -y\
     git \
     zip \
@@ -17,9 +20,11 @@ RUN apt-get install -y\
     vim \
     wget \
     && \
+    docker-php-ext-configure pdo_mysql && docker-php-ext-install pdo_mysql && \
     rm -r /var/lib/apt/lists/* &&\
-    a2enmod rewrite &&\
-    a2enmod expires
+    a2enmod rewrite && \
+    a2enmod expires && \
+    a2enmod headers
 
 # Copie le conteneur du conteneur Composer en global
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -30,7 +35,6 @@ WORKDIR /var/www/html/
 
 # Copie le projet Symfony dans le conteneur
 COPY ./app/ ./
-
 
 # Affiche la configuration de la machine à lors du build
 RUN echo "\n\n\n\n\n\n\n\n\n\n==============CONFIGURATION==============\n\nSystème d'exploitation\n----------------------\e[32m"&&\

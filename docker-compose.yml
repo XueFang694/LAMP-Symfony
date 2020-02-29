@@ -26,15 +26,15 @@ services :
         volumes :
             - hotfolder_composer:/usr/bin/
 
-    integration :
-        build : ./docker/jenkins
-        ports :
-           - 8084:8080
-           - 50000:50000
-        volumes :
-           - hotfolder_jenkins:/var/jenkins_home   
-        links :
-           - php_apache
+    #integration :
+    #    build : ./docker/jenkins
+    #    ports :
+    #       - 8084:8080
+    #       - 50000:50000
+    #    volumes :
+    #       - hotfolder_jenkins:/var/jenkins_home   
+    #    links :
+    #       - php_apache
 
     bdd :
         build : ./docker/mariadb
