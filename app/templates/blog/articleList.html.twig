@@ -1,4 +1,4 @@
-{% extends 'blog/index.html.twig' %}
+{% extends "blog/common.html.twig" %}
 
 {% block body %}
     {% for art in articles %}
@@ -6,4 +6,4 @@
         <a href="{{ path( "blog_display_article", {id: art.id}) }}">Lire l'article</a>
         {{ art.content | raw }}
     {% endfor %}
-{% endblock body %}
+{% endblock %}

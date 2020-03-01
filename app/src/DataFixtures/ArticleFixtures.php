@@ -15,7 +15,7 @@ class ArticleFixtures extends Fixture
     {
         
         $faker = Factory::create("fr_FR");
-        // Créé 3 catégories factices
+        // Crï¿½ï¿½ 3 catï¿½gories factices
         for($i = 0; $i < 3; $i++)
         {
             $category = new Category();
@@ -23,7 +23,7 @@ class ArticleFixtures extends Fixture
             ->setDescription($faker->paragraph());
             $manager->persist($category);
             
-            // Créé entre 4 et 6 articles dans la catégorie
+            // Crï¿½ï¿½ entre 4 et 6 articles dans la catï¿½gorie
             for($j = 1; $j < mt_rand(4, 6); $j++)
             {
                 $content = "<p>" . join($faker->paragraphs(), "</p><p>") . "</p>";

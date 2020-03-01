@@ -3,17 +3,21 @@ version : "3.7"
 
 services :
 
-    php_apache :
+    app_symfony :
         build : ./
         ports :
             - 8080:80
         volumes :
             - ./:/var/www/html
         tty: true
-        links :
-            - bdd:bdd
+        networks:
+            - frontend
+            - backend
+        #links :
+        #    - bdd:bdd
         environment:
             MYSQL_HOST : bdd
+            MYSQL_DATABASE: app_symfony
             MYSQL_USER : root
             MYSQL_PASSWORD : root
 
@@ -21,8 +25,10 @@ services :
         image : composer:latest
         ports :
             - 8081:80
-        links :
-            - php_apache:php_apache
+        networks:
+            - backend
+       # links :
+       #     - php_apache:php_apache
         volumes :
             - hotfolder_composer:/usr/bin/
 
@@ -38,13 +44,15 @@ services :
 
     bdd :
         build : ./docker/mariadb
-        restart : always
+        restart : unless-stopped
         ports :
             - 3306:3306
         labels:
             com.symfony.server.service-prefix: 'DATABASE'
         volumes :
             - hotfolder_bdd:/var/lib/mysql
+        networks:
+            - backend
         environment :
             MYSQL_ROOT_USER : symfony
             MYSQL_ROOT_PASSWORD : symfony
@@ -54,10 +62,19 @@ services :
         image : phpmyadmin/phpmyadmin:5.0
         ports :
             - 8082:80
-        links :
-            - bdd:bdd
+       # links :
+       #     - bdd:bdd
         environment :
             - PMA_HOST=bdd
+        networks:
+            - backend
+            
+networks:
+  frontend:
+    driver: bridge         
+  backend:
+    driver: bridge
+    
 volumes:
     hotfolder_bdd:
     hotfolder_composer:

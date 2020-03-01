@@ -65,7 +65,7 @@ class User
     /**
      * @ORM\Column(type="boolean", options={"default":false})
      */
-    private $isOnline;
+    private $isOnline = false;
 
     public function getId(): ?int
     {

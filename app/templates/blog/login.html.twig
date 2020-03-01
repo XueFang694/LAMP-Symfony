@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="{{ asset("css/minireset.min.css") }}" rel="stylesheet"/>
-        <title>Industrialiseur | Page de connexion</title>
+{% extends 'blog/common.html.twig' %}
+{% block title %}Industrialiseur | Page de connexion{% endblock %}
+{% block styles %}
         <style>
 
             html,body
@@ -92,18 +88,18 @@
                 cursor: pointer;
             }
 
-        </style>
-    </head>
-    <body>
+{% endblock %}
+{% block body %}
         <div id="container_loging">
             <div id="container" class="container_loging">
                 {{form_start(formLogin)}}
                 {{form_row(formLogin.login, {'label':false,'attr':{'placeholder': 'Votre identifiant'}})}}
-                {{form_row(formLogin.password, {'label':false,'attr':{'placeholder': 'Votre mot de passe'}})}}
                 {{form_widget(formLogin)}}
-                {{form_end(formLogin)}}
                 <button type="submit">Se connecter</button>
+                {{form_end(formLogin)}}
+                {% if unknowUser %}
+                <p>Combinaison utilisateur/Mot de passe inconnu</p>
+                {% endif %}
             </div>
         </div>
-    </body>
-</html>
+{% endblock %}
