@@ -2,12 +2,12 @@ FROM php:7.4.2-apache AS build
 
 
 LABEL author="Geoffrey LEVENEZ"
-# Paramétrage de la zone géographique
+# Paramï¿½trage de la zone gï¿½ographique
 RUN echo "Europe/Paris" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
-# Mise à  jour de l'OS
-RUN apt-get update; echo "Erreur lors de la mise à  jour de l'OS" exit 0
-# Lors de l'ouverture du conteneur les commandes suivantes seront exécutées
+# Mise ï¿½ jour de l'OS
+RUN apt-get update; echo "Erreur lors de la mise ï¿½ jour de l'OS" exit 0
+# Lors de l'ouverture du conteneur les commandes suivantes seront exï¿½cutï¿½es
 
 # Copie le fichier de configuration de PHP
 COPY ./docker/php_apache/php.ini /usr/local/etc/php/
@@ -36,8 +36,8 @@ WORKDIR /var/www/html/
 # Copie le projet Symfony dans le conteneur
 COPY ./app/ ./
 
-# Affiche la configuration de la machine à lors du build
-RUN echo "\n\n\n\n\n\n\n\n\n\n==============CONFIGURATION==============\n\nSystème d'exploitation\n----------------------\e[32m"&&\
+# Affiche la configuration de la machine ï¿½ lors du build
+RUN echo "\n\n\n\n\n\n\n\n\n\n==============CONFIGURATION==============\n\nSystï¿½me d'exploitation\n----------------------\e[32m"&&\
     cat /etc/os-release &&\
     echo "\n\n\e[39mVersion PHP\n-----------\e[32m" &&\
     php -v &&\

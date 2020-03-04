@@ -32,13 +32,27 @@ services :
         volumes :
             - hotfolder_composer:/usr/bin/
 
+
+    benchmark :
+        image : blackfire/blackfire
+        ports :
+            - 8707
+        environment:
+        # Exposes BLACKFIRE_SERVER_* environment variables from the host
+        - BLACKFIRE_SERVER_ID: "bd9faad6-74b9-4ace-86b6-b03d920f29ad"
+        - BLACKFIRE_SERVER_TOKEN: "859cd44dc9ee6222f6ce25e5768349fce81099da88ac8cca03e91e4a57366769"
+        - BLACKFIRE_CLIENT_ID: "eb78ead5-7a73-4fc0-8aa7-4ddff21ac709"
+        - BLACKFIRE_CLIENT_TOKEN: "e9856c33415cd10cb5871c1d02e4d9df63436052fbc0749d9a4db5bc4829981a"
+
+        networks:
+            - backend
     #integration :
     #    build : ./docker/jenkins
     #    ports :
     #       - 8084:8080
     #       - 50000:50000
     #    volumes :
-    #       - hotfolder_jenkins:/var/jenkins_home   
+    #       - hotfolder_jenkins:/var/jenkins_home
     #    links :
     #       - php_apache
 
@@ -68,13 +82,13 @@ services :
             - PMA_HOST=bdd
         networks:
             - backend
-            
+
 networks:
   frontend:
-    driver: bridge         
+    driver: bridge
   backend:
     driver: bridge
-    
+
 volumes:
     hotfolder_bdd:
     hotfolder_composer:
