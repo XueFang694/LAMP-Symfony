@@ -15,6 +15,7 @@ class ComposerStaticInit7034a4c036c8fb2200cf8ae5db21a31f
         '6a47392539ca2329373e0d33e1dba053' => __DIR__ . '/..' . '/symfony/polyfill-intl-icu/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
+        'd45d087767e66b9914075f6f6efd1435' => __DIR__ . '/..' . '/blackfire/php-sdk/src/autostart.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -55,6 +56,14 @@ class ComposerStaticInit7034a4c036c8fb2200cf8ae5db21a31f
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+        ),
+        'C' => 
+        array (
+            'Composer\\CaBundle\\' => 18,
+        ),
+        'B' => 
+        array (
+            'Blackfire\\' => 10,
         ),
     );
 
@@ -164,6 +173,14 @@ class ComposerStaticInit7034a4c036c8fb2200cf8ae5db21a31f
             0 => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common',
             1 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
             2 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
+        ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
+        'Blackfire\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/blackfire/php-sdk/src/Blackfire',
         ),
     );
 

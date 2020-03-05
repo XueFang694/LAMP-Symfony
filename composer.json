@@ -1,5 +1,6 @@
 {
 	"require" : {
-		"symfony/symfony" : "^5.0"
+		"symfony/symfony" : "^5.0",
+		"blackfire/php-sdk": "^1.21"
 	}
 }

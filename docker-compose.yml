@@ -4,6 +4,7 @@ version : "3.7"
 services :
 
     app_symfony :
+        container_name: my_app_app_symfony
         build : ./
         ports :
             - 8080:80
@@ -22,6 +23,7 @@ services :
             MYSQL_PASSWORD : root
 
     composer :
+        container_name: my_app_composer
         image : composer:latest
         ports :
             - 8081:80
@@ -34,18 +36,25 @@ services :
 
 
     benchmark :
+        container_name: my_app_benchmark
         image : blackfire/blackfire
         restart: always
         ports :
             - 8707
         environment:
-            BLACKFIRE_SERVER_ID: 'bd9faad6-74b9-4ace-86b6-b03d920f29ad'
-            BLACKFIRE_SERVER_TOKEN: 'bd9faad6-74b9-4ace-86b6-b03d920f29ad'
-            BLACKFIRE_CLIENT_ID: 'eb78ead5-7a73-4fc0-8aa7-4ddff21ac709'
-            BLACKFIRE_CLIENT_TOKEN: 'e9856c33415cd10cb5871c1d02e4d9df63436052fbc0749d9a4db5bc4829981a'
-
+            BLACKFIRE_LOG_LEVEL: 4
+            BLACKFIRE_SERVER_ID: bd9faad6-74b9-4ace-86b6-b03d920f29ad
+            BLACKFIRE_SERVER_TOKEN: db34c1968bc10417cc244a0e0bc3bbdcf653a737770473c0632e4b9f556324ab
+            BLACKFIRE_CLIENT_ID: eb78ead5-7a73-4fc0-8aa7-4ddff21ac709
+            BLACKFIRE_CLIENT_TOKEN: 76744ff09313636b7b790628ceded921aace653dac9ea24a18c71c08fd7cbfc7
+            BLACKFIRE_SOCKET: tcp://0.0.0.0:8707
+            BLACKFIRE_CONFIG: /dev/null
+        links:
+           - app_symfony
         networks:
-            - backend
+           - backend
+        volumes:
+           - hotfolder_benchmark:/usr/bin/
     #integration :
     #    build : ./docker/jenkins
     #    ports :
@@ -57,6 +66,7 @@ services :
     #       - php_apache
 
     bdd :
+        container_name: my_app_bdd
         build : ./docker/mariadb
         restart : unless-stopped
         ports :
@@ -73,6 +83,7 @@ services :
         tty: true
 
     phpMyAdmin :
+        container_name: my_app_phpMyAdmin
         image : phpmyadmin/phpmyadmin:5.0
         ports :
             - 8082:80
@@ -93,3 +104,4 @@ volumes:
     hotfolder_bdd:
     hotfolder_composer:
     hotfolder_jenkins:
+    hotfolder_benchmark:
