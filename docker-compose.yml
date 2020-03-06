@@ -35,8 +35,8 @@ services :
             - hotfolder_composer:/usr/bin/
 
 
-    benchmark :
-        container_name: my_app_benchmark
+    blackfire :
+        container_name: blackfire
         image : blackfire/blackfire
         restart: always
         ports :
@@ -47,14 +47,13 @@ services :
             BLACKFIRE_SERVER_TOKEN: db34c1968bc10417cc244a0e0bc3bbdcf653a737770473c0632e4b9f556324ab
             BLACKFIRE_CLIENT_ID: eb78ead5-7a73-4fc0-8aa7-4ddff21ac709
             BLACKFIRE_CLIENT_TOKEN: 76744ff09313636b7b790628ceded921aace653dac9ea24a18c71c08fd7cbfc7
-            BLACKFIRE_SOCKET: tcp://0.0.0.0:8707
-            BLACKFIRE_CONFIG: /dev/null
         links:
            - app_symfony
         networks:
            - backend
         volumes:
            - hotfolder_benchmark:/usr/bin/
+           - ./logs/blackfire:/tmp/
     #integration :
     #    build : ./docker/jenkins
     #    ports :
