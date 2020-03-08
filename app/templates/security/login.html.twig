@@ -92,14 +92,12 @@
 {% block body %}
         <div id="container_loging">
             <div id="container" class="container_loging">
-                {{form_start(formLogin)}}
-                {{form_row(formLogin.login, {'label':false,'attr':{'placeholder': 'Votre identifiant'}})}}
+                {{form_start(formLogin, {'action': path('security_login'), 'method': 'POST'})}}
+                {{form_row(formLogin.username, {'label':false, 'full_name': '_username', 'attr':{'placeholder': 'Votre identifiant'}})}}
+                {{form_row(formLogin.password, {'label':false, 'full_name': '_password', 'attr':{'placeholder': 'Votre mot de passe'}})}}
                 {{form_widget(formLogin)}}
                 <button type="submit">Se connecter</button>
                 {{form_end(formLogin)}}
-                {% if unknowUser %}
-                <p>Combinaison utilisateur/Mot de passe inconnu</p>
-                {% endif %}
             </div>
         </div>
 {% endblock %}

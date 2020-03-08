@@ -27,56 +27,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 class BlogController extends AbstractController
 {
 
+    
     /**
      *
-     * @Route("/", name="login")
-     */
-    public function login(Request $request, UserRepository $repo)
-    {
-        $user = new User();
-        
-        $form = $this->createForm( LoginType::class, $user );
-        $form->add("password", PasswordType::class, [
-            "label" => false,
-            "attr" => ['placeholder' => 'Votre mot de passe']
-        ]);
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
-            
-            $input = $form->getData();
-            $checkUser = $repo->findBy([
-                "login" => $input->getLogin(),
-                "password" => $input->getPassword()
-            ]);
-            if(count($checkUser) === 0)
-            {
-                return $this->render( "blog/login.html.twig", [
-                    "route" => $request->attributes->get('_route'),
-                    "formLogin" => $form->createView(),
-                    "unknowUser" => true,
-                    "image" => "https://picsum.photos/id/3/200/200.jpg",
-                    "background" => "https://picsum.photos/1920/1080"
-                ] );
-            }elseif (count($checkUser) === 1)
-            {
-                return $this->redirectToRoute( "blog" );
-            }
-        }
-
-        return $this->render( "blog/login.html.twig", [
-                    "route" => $request->attributes->get('_route'),
-                    "formLogin" => $form->createView(),
-                    "unknowUser" => false,
-                    "image" => "https://picsum.photos/id/3/200/200.jpg",
-                    "background" => "https://picsum.photos/1920/1080"
-                ] );
-    }
-
-    /**
-     *
-     * @Route("/blog", name="blog")
+     * @Route("/", name="blog")
      */
     public function list( ArticleRepository $repo )
     {
@@ -145,56 +99,6 @@ class BlogController extends AbstractController
                     "article" => $article,
                     "formComment" => $form->createView()
                 ] );
-    }
-
-    /**
-     * @Route("/subscribe", name="subscribe")
-     */
-    public function subscribe(Request $request, EntityManagerInterface $manager, UserRepository $repo)
-    {
-
-        $user = new User();
-
-        $form = $this->createForm(SubscribeType::class);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $input = $form->getData();
-            // Vérifie si l'utilisateur existe déjà
-            $seekUser = $repo->findByLogin($input->getLogin());
-            if( count($seekUser) > 0 )
-            {
-                $this->addFlash('error', 'Le compte existe déjà.');
-                return $this->render("blog/subscribe.html.twig",
-                [
-                    "formSubscribe" => $form->createView()
-                ]);
-            }
-
-            
-
-            $user->setLogin($input->getLogin())
-            ->setPassword($input->getPassword())
-            ->setFirstname($input->getFirstname())
-            ->setLastname($input->getLastname())
-            ->setCreatedAt(new \DateTime())
-            ->setLastConnect(new \DateTime());
-
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', 'Le compte a bien été créé.');
-            return $this->redirectToRoute("blog",
-            [
-                "login" => $user->getLogin()
-            ]);
-        }
-
-        return $this->render("blog/subscribe.html.twig",
-        [
-            "formSubscribe" => $form->createView()
-        ]);
     }
     
 }

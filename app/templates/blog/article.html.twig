@@ -1,13 +1,13 @@
-{% extends 'blog/index.html.twig' %}
+{% extends 'blog/common.html.twig' %}
 {% block body %}
     Bonjour, je suis l'article {{article.name}}
     <br>
-    Catégorie : {{ article.category.name }}
+    Catï¿½gorie : {{ article.category.name }}
     
     <section>
     {% for comment in article.comments %}
     <div>
-    	<h5>Commentaire écrit par {{ comment.author }} le {{ comment.createdAt | date("d-m-Y") }}</h5>
+    	<h5>Commentaire ï¿½crit par {{ comment.author }} le {{ comment.createdAt | date("d-m-Y") }}</h5>
     	<p>
     	{{ comment.content }}
     	</p>

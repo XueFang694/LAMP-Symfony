@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
             $faker = Factory::create("fr_FR");
             
             $user = new User();
-            $user->setLogin($faker->firstName)
+            $user->setUsername($faker->firstName)
             ->setPassword($faker->password)
             ->setCreatedAt(new \DateTime())
             ->setFirstname($faker->firstName)

@@ -1,15 +1,35 @@
 security:
+    encoders:
+        App\entity\User:
+            algorithm: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: lazy
-            provider: users_in_memory
 
+            # Nom du provider a utiliser
+            provider: in_database
+            # Gestionnaire de connexion de l'utilisateur
+            form_login:
+                # Route vers la page de connexion
+                login_path: security_login
+                # Route vers la page de verification de la connexion
+                check_path: security_login
+            # Gestionnaire de deconnexion de l'utilisateur
+            logout:
+                # Route vers la deconnexion
+                path: security_logout
+                # Une fois deconnecte redirige vers cette route
+                target: security_login
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -21,3 +41,6 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+        # Interdit d'accéder à une autre page que la racine du site sans être connecté à un compte utilisateur
+        - { path: '^/$', roles: [IS_AUTHENTICATED_FULLY] }

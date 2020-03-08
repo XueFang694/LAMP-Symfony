@@ -4,16 +4,22 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity
+ * (
+ *  fields={"username"},
+ *  message="L'utilisateur existe déjà"
+ * )
  */
-class User
+class User implements UserInterface
 {
 
     /**
@@ -27,13 +33,15 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *   min=3,
-     *   minMessage="Votre login doit être composé d'au moins 3 caractères"
+     *   minMessage="Votre identifiant doit être composé d'au moins 3 caractères"
      * )
      */
-    private $login;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8)
+     * @Assert\EqualTo(propertyPath="confirmPassword", message="Votre mot de passe n'est pas identique")
      */
     private $password;
 
@@ -58,28 +66,27 @@ class User
     private $lastConnect;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UsersGroup", inversedBy="users")
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="boolean", options={"default":false})
      */
     private $isOnline = false;
+    /**
+     * @Assert\Length(min=8)
+     */
+    private $confirmPassword;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLogin(): ?string
+    public function getUsername(): ?string
     {
-        return $this->login;
+        return $this->username;
     }
 
-    public function setLogin( string $login ): self
+    public function setUsername( string $username ): self
     {
-        $this->login = $login;
+        $this->username = $username;
 
         return $this;
     }
@@ -144,18 +151,6 @@ class User
         return $this;
     }
 
-    public function getUser(): ?UsersGroup
-    {
-        return $this->user;
-    }
-
-    public function setUser( ?UsersGroup $user ): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getIsOnline(): ?bool
     {
         return $this->isOnline;
@@ -167,6 +162,22 @@ class User
 
         return $this;
     }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    public function getSalt(){}
+    public function getRoles(){return array('ROLE_USER');}
+    public function eraseCredentials(){}
 
 }
 

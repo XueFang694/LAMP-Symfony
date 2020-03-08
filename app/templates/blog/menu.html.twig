@@ -1,12 +1,11 @@
 <ul>
-    {% if route is defined and route != "login" %}
-    <li><a href="{{ path('login') }}">Connexion</a></li>
-    <li><a href="{{ path('blog') }}">Blog</a></li>
-    <li><a href="{{ path('blog_create') }}">Create</a></li>
-    {% elseif route is not defined %}
-    <li><a href="{{ path('login') }}">Connexion</a></li>
-    <li><a href="{{ path('blog') }}">Blog</a></li>
-    <li><a href="{{ path('blog_create') }}">Create</a></li>
+    {% if not app.user %}
+        <li><a href="{{ path('security_subscribe') }}">S'inscrire</a></li>
+        <li><a href="{{ path('security_login') }}">Connexion</a></li>
+    {% else %}
+        <li><a href="{{ path('security_logout') }}">Deconnexion</a></li>
     {% endif %}
-    <li><a href="{{ path('subscribe') }}">S'inscrire</a></li>
+    <li><a href="{{ path('blog') }}">Blog</a></li>
+    <li><a href="{{ path('blog_create') }}">Create</a></li>
+    
 </ul>
