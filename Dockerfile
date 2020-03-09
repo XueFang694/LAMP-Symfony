@@ -23,6 +23,8 @@ RUN apt-get install -y\
     a2enmod rewrite && \
     a2enmod expires && \
     a2enmod headers
+
+# Installe BlackFire sur la machine
 RUN wget -q -O - https://packages.blackfire.io/gpg.key | apt-key add -
 RUN echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list
 RUN apt-get update
@@ -36,7 +38,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # Copie le fichier de configuration d'apache dans le conteneur
 COPY ./docker/php_apache/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
-
+# Place le curseur dans le dossier racine d'Apache
 WORKDIR /var/www/html/
 
 # Copie le projet Symfony dans le conteneur
