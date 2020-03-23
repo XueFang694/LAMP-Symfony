@@ -29,10 +29,8 @@ services :
             - 8081:80
         networks:
             - backend
-       # links :
-       #     - php_apache:php_apache
         volumes :
-            - hotfolder_composer:/usr/bin/
+            - "hotfolder_composer:/usr/bin/"
 
 
     blackfire :
@@ -52,7 +50,7 @@ services :
         networks:
            - backend
         volumes:
-           - hotfolder_benchmark:/usr/bin/
+           - "hotfolder_benchmark:/usr/bin/"
            - ./logs/blackfire:/tmp/
     #integration :
     #    build : ./docker/jenkins
@@ -73,12 +71,13 @@ services :
         labels:
             com.symfony.server.service-prefix: 'DATABASE'
         volumes :
-            - hotfolder_bdd:/var/lib/mysql
+            - "hotfolder_bdd:/var/lib/mysql"
         networks:
             - backend
         environment :
-            MYSQL_ROOT_USER : symfony
-            MYSQL_ROOT_PASSWORD : symfony
+            MYSQL_ROOT_HOST : '%'
+            MYSQL_ROOT_USER : root
+            MYSQL_ROOT_PASSWORD : root
         tty: true
 
     phpMyAdmin :
@@ -86,10 +85,11 @@ services :
         image : phpmyadmin/phpmyadmin:5.0
         ports :
             - 8082:80
-       # links :
-       #     - bdd:bdd
+        links :
+           - bdd:bdd
         environment :
-            - PMA_HOST=bdd
+            PMA_HOST: bdd
+            MYSQL_ROOT_PASSWORD: root
         networks:
             - backend
 

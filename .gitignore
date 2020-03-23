@@ -1,2 +1,6 @@
-/nbproject/private/
+/nbproject/
 /node_modules/
+.buildpath
+.project
+/vendor/
+/settings/
