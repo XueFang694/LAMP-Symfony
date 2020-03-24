@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
-import Head from './components/head'
+import Head from './components/head';
+import MainMenu from './components/main_menu';
+import About from './components/pages/about';
 
 import css from "../css/styles.css";
 
@@ -21,26 +22,10 @@ const App = () =>
                 </Head>
                 {/* Fin ./components/head */}
 
-                <nav>
-                    <ul>
-                        <li>
-                        <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                        <Link to="/about">About</Link>
-                        </li>
-                        <li>
-                        <Link to="/users">Users</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <MainMenu />
 
                 <Switch>
-                    {/* 
-                    <Route path="/about">
-                        <About />
-                    </Route>
-                    */}
+                    <Route exact path="/about" component={About} />
                 </Switch>
             </div>
         </Router>

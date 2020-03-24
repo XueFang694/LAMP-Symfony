@@ -33,13 +33,15 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    historyApiFallback: true
+  },
   resolve: {
       extensions: ['.html', '.js', '.jsx']
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html"
+      template: "./src/index.html"
     })
   ]
 };
