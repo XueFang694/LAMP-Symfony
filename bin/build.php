@@ -16,15 +16,6 @@ chdir("$root/app/backend");
 cout("Mise à jour de Composer");
 trigger('composer install');
 ////////////////////////////////////
-cout("Création de la base de donnée");
-trigger('docker exec -u root -t --privileged my_app_app_symfony php bin/console doctrine:database:create --no-interaction', true);
-////////////////////////////////////
-cout("Récupération de la structure de la base de donnée");
-trigger('docker exec -u root -t --privileged my_app_app_symfony php bin/console doctrine:migrations:migrate --no-interaction', true);
-////////////////////////////////////
-cout("Injection de fixtures dans la base de donnée");
-trigger('docker exec -u root -t --privileged my_app_app_symfony php bin/console doctrine:fixtures:load --no-interaction', true);
-////////////////////////////////////
 cout("Nettoyage du cache de Symfony");
 trigger('php bin/console cache:clear');
 ////////////////////////////////////
