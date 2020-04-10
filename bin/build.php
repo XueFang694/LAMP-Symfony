@@ -5,11 +5,11 @@ $root = getcwd();
 cout('Stop le conteneur Docker dans le cas ou il serait deja en marche');
 trigger('docker-compose down --remove-orphans --volumes');
 ////////////////////////////////////
-cout("Construit le conteneur Docker");
-trigger('docker-compose build', true);
+//cout("Construit le conteneur Docker");
+trigger('docker-compose --verbose build', true);
 ////////////////////////////////////
 cout("Démarre le conteneur Docker");
-trigger('docker-compose up -d', true);
+trigger('docker-compose up --force-recreate -d', true);
 ////////////////////////////////////
 chdir("$root/app/backend");
 ////////////////////////////////////

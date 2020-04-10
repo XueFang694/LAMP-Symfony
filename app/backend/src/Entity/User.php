@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Entity;
-
+require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
-
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version2X;
+use ElephantIO\Exception\ServerConnectionFailureException;
 
 
 /**
@@ -20,6 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *  fields={"username"},
  *  message="L'utilisateur existe déjà"
  * )
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -180,6 +183,29 @@ class User implements UserInterface
     public function getSalt(){}
     public function getRoles(){return array('ROLE_USER');}
     public function eraseCredentials(){}
+    
+    /**
+     * @ORM\PostPersist
+     */
+    public function dispatchToSocket()
+    {
+        try
+        {
+            // create client for server http://localhost:9009
+            $client = new Client(new Version2X('http://localhost:9009'));
+
+            // open connection
+            $client->initialize();
+
+            // send for server (listen) the any array
+            $client->emit('emitPHP', ['age' => 28]);
+
+            // close connection
+            $client->close();
+        } catch (ServerConnectionFailureException $e) {
+            dd($e->getErrorMessage());
+        }
+    }
 
 }
 

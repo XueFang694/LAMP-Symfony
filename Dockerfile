@@ -3,13 +3,12 @@ FROM php:7.4.2-apache AS build
 
 LABEL author="Geoffrey LEVENEZ"
 # Parametrage de la zone geographique
-RUN echo "Europe/Paris" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
-# Mise a jour de l'OS
-RUN apt-get update; echo "Erreur lors de la mise a jour de l'OS" exit 0
+RUN echo "Europe/Paris" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
 
 # Lors de l'ouverture du conteneur les commandes suivantes seront executees
-RUN apt-get install -y\
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     git \
     zip \
     unzip \
@@ -17,6 +16,7 @@ RUN apt-get install -y\
     vim \
     wget \
     gnupg2 \
+    supervisor \
     && \
     docker-php-ext-configure pdo_mysql && docker-php-ext-install pdo_mysql && \
     rm -r /var/lib/apt/lists/* &&\
@@ -37,11 +37,17 @@ COPY ./docker/php_apache/php.ini /usr/local/etc/php/
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 # Copie le fichier de configuration d'apache dans le conteneur
 COPY ./docker/php_apache/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+# Copie la configuration et initialiseur du websocket
+COPY ./docker/php_apache/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Demarre supervisor
+CMD ["/usr/bin/supervisord"]
 
 # Place le curseur dans le dossier racine d'Apache
 WORKDIR /var/www/html/
 
 # Copie le projet dans le conteneur
-COPY ./app/ ./
+COPY ./app/backend ./
+COPY ./app/frontend ./
+COPY ./app/websocket ./
 
 WORKDIR /var/www/html/app/backend/
