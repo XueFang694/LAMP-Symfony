@@ -8,7 +8,7 @@ RUN echo "Europe/Paris" > /etc/timezone && \
 
 # Lors de l'ouverture du conteneur les commandes suivantes seront executees
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
     git \
     zip \
     unzip \
@@ -16,7 +16,6 @@ RUN apt-get update && \
     vim \
     wget \
     gnupg2 \
-    supervisor \
     && \
     docker-php-ext-configure pdo_mysql && docker-php-ext-install pdo_mysql && \
     rm -r /var/lib/apt/lists/* &&\
@@ -37,17 +36,11 @@ COPY ./docker/php_apache/php.ini /usr/local/etc/php/
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 # Copie le fichier de configuration d'apache dans le conteneur
 COPY ./docker/php_apache/000-default.conf /etc/apache2/sites-enabled/000-default.conf
-# Copie la configuration et initialiseur du websocket
-COPY ./docker/php_apache/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-# Demarre supervisor
-CMD ["/usr/bin/supervisord"]
 
 # Place le curseur dans le dossier racine d'Apache
 WORKDIR /var/www/html/
 
 # Copie le projet dans le conteneur
-COPY ./app/backend ./
-COPY ./app/frontend ./
-COPY ./app/websocket ./
+COPY ./app ./
 
 WORKDIR /var/www/html/app/backend/

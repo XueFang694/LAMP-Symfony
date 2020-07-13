@@ -2,18 +2,24 @@
 declare(strict_types=1);
 
 $root = getcwd();
+////////////////////////////////////
+cout('Vide les dossiers de logs/caches pour accélérer le build');
+trigger('rm -rf ./logs/*');
+trigger('rm -rf ./app/backend/var/log/*');
+trigger('rm -rf ./app/backend/var/cache/*');
+////////////////////////////////////
 cout('Stop le conteneur Docker dans le cas ou il serait deja en marche');
 trigger('docker-compose down --remove-orphans --volumes');
 ////////////////////////////////////
-//cout("Construit le conteneur Docker");
+cout("Construit le conteneur Docker");
 trigger('docker-compose --verbose build', true);
 ////////////////////////////////////
 cout("Démarre le conteneur Docker");
-trigger('docker-compose up --force-recreate -d', true);
+trigger('docker-compose up -d', true);
 ////////////////////////////////////
 chdir("$root/app/backend");
 ////////////////////////////////////
-cout("Mise à jour de Composer");
+cout("Mise à jour de Composer dans le conteneur Symfony");
 trigger('composer install');
 ////////////////////////////////////
 cout("Nettoyage du cache de Symfony");
@@ -31,6 +37,11 @@ trigger('npm install -g npm');
 ////////////////////////////////////
 cout("Installe les dépendances nécessaires pour le fonctionnement du frontend");
 trigger('npm install');
+////////////////////////////////////
+cout("Démarre le service 'supervisord'");
+trigger('docker exec container_websocket touch /var/run/supervisor.sock', true);
+trigger('docker exec container_websocket chmod 777 /var/run/supervisor.sock', true);
+trigger('docker exec container_websocket /usr/bin/supervisord', true);
 ////////////////////////////////////
 cout("Démarre et compile le frontend");
 trigger('npm run start', true);

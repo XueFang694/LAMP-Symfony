@@ -4,7 +4,7 @@ version : "3.7"
 services :
 
     app_symfony :
-        container_name: my_app_app_symfony
+        container_name: container_symfony
         build : ./
         ports :
             - 8080:80
@@ -22,7 +22,7 @@ services :
             MYSQL_PASSWORD : root
 
     composer :
-        container_name: my_app_composer
+        container_name: container_composer
         image : composer:latest
         ports :
             - 8081:80
@@ -62,7 +62,7 @@ services :
     #       - php_apache
 
     bdd :
-        container_name: my_app_bdd
+        container_name: container_bdd
         build : ./docker/mariadb
         restart : unless-stopped
         ports :
@@ -79,7 +79,7 @@ services :
             MYSQL_ROOT_PASSWORD : root
 
     phpMyAdmin :
-        container_name: my_app_phpMyAdmin
+        container_name: container_phpMyAdmin
         image : phpmyadmin/phpmyadmin:5.0
         ports :
             - 8082:80
@@ -89,6 +89,15 @@ services :
             PMA_HOST: bdd
             MYSQL_ROOT_PASSWORD: root
         networks:
+            - backend
+
+    websocket :
+        container_name : container_websocket
+        build : ./docker/websocket
+        ports :
+            - 9009:9009
+        networks:
+            - frontend
             - backend
 
 networks:
